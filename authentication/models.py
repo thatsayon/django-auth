@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from django.db import models
 import uuid
 
@@ -8,7 +9,7 @@ import uuid
 class CustomAccountManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError(_("the email must be set"))
+            raise ValueError(_("The email must be set"))
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
@@ -42,7 +43,33 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    is_superuser = models.BooleanField(_("superuser status"), default=False)
+
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='useraccount_groups',
+        blank=True,
+        help_text=_('The groups this user belongs to.'),
+        verbose_name=_('groups'),
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='useraccount_permissions',
+        blank=True,
+        help_text=_('Specific permissions for this user.'),
+        verbose_name=_('user permissions'),
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "full_name", "date_of_birth", "gender"]
+
+    objects = CustomAccountManager()
+
+    def __str__(self):
+        return self.email
+
+    def get_full_name(self):
+        return self.full_name
+
+    def get_short_name(self):
+        return self.username
+
