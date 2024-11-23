@@ -44,6 +44,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             is_active=False
         )
+        print("hi")
         return user
 
 
