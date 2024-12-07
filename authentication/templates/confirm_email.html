@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>verify mail</title>
+    <style>
+        .container {
+           width: 100%;
+           max-width: 600px;
+           margin: 0 auto;
+           background-color: #ffffff;
+           border: 1px solid #dddddd;
+           border-radius: 5px;
+           text-align: center;
+        }
+
+        .header {
+          text-align: center;
+          padding: 20px;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .content h4 {
+            font-size: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content h6 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .content p {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .verify-button {
+            padding: 0.8rem 2rem; /* Adjusted padding */
+            color: white;
+            background: #fc5d5d;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none; /* Added to remove default link underline */
+            display: inline-block; /* Added to make it inline */
+            margin-bottom: 10px;
+        }
+
+        .verify-button:hover {
+            background: #ff7d7d; /* Change color on hover */
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="https://sahityojogot.com/assets/bg-logo-BWbbv1_f.png" alt="sj logo" style="max-width: 150px;" />
+        <h1>আপনার মেইল যাচাই করুন</h1>
+        <div>
+            <h3>Hello</h3>
+            <p>{{ full_name }}</p>
+        </div>
+    </div>
+    <div class="content">
+        <p>বর্তমানে আপনি <span>সাহিত্য জগৎ</span> পরিবারের সদস্য হওয়ার সর্বশেষ স্তরে। আপনি এখন আমাদের সাইটটি ব্যবহার করার জন্য সম্পূর্ণরূপে প্রস্তুত।</p>
+        <br>
+        <p>তবে তার জন্য আপনার ইমেইলটি Verify করতে হবে। আপনার ইমেইলটি Verify করতে নিচের দেওয়া Verify বাটনে Click করুন। আর আপনি যদি <span>সাহিত্য জগৎ</span> এ কোনো অ্যাকাউন্ট তৈরি করে না থাকেন তাহলে এই মেইলটি এড়িয়ে যান।</p>
+        <br>
+        <p>Email OTP: {{ email_otp }}
+    </div>
+    <br />
+    <a href="{{ confirm_link }}" class="verify-button">Verify</a>
+</div>
+</body>
+</html>
+
