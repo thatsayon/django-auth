@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
+from django.utils import timezone
 import os
 import environ
 
@@ -160,3 +161,25 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
+
+# time settings
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'Asia/Dhaka'
+
+USE_I18N = True
+
+USE_TZ = True
+
+CELERY_TIMEZONE = "Asia/Dhaka"
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+CELERY_BEAT_SCHEDULE = {
+    'delete_expired_accounts_task': {
+        'task': 'authentication.tasks.remove_expired_otps',
+        'schedule': 1,  # Run daily
+    },
+}
+
+INSTALLED_APPS += ['django_celery_beat']

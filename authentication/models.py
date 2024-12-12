@@ -40,8 +40,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(_("gender"), max_length=7, choices=[
         ("male", "Male"), ("female", "Female"), ("other", "Other")
     ])
-    email_otp = models.CharField(max_length=6, null=True, blank=True)
-    is_email_verified = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
@@ -75,3 +73,17 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.username
+
+
+class OTP(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    email = models.EmailField(_("email address"))
+    otp = models.CharField(_("otp"), max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return timezone <= self.created_at + timezone.timedelta(minutes=5)
+
+    def __str__(self):
+        return f"OTP for {self.email}"
